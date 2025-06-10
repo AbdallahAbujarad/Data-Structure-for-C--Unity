@@ -58,7 +58,7 @@ public class LinkedListStructure : MonoBehaviour
         public void Display()
         {
             Node cur = front;
-            for (int i = 0; i < length; i++)
+            while (cur != null)
             {
                 Debug.Log(cur.item);
                 cur = cur.next;
@@ -162,6 +162,33 @@ public class LinkedListStructure : MonoBehaviour
             prev.next = toDelete.next;
             length--;
         }
+        public void Reverse()
+        {
+            Node cur = front;
+            Node prev = null;
+            Node next;
+            back = front;
+            while (cur != null)
+            {
+                next = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = next;
+            }
+            front = prev;
+        }
+        public int Search(T item)
+        {
+            Node cur = front;
+            int pos = 0;
+            while (cur != null)
+            {
+                if (cur.item.Equals(item)) return pos;
+                pos++;
+                cur = cur.next;
+            }
+            return -1;
+        }
     }
     void Start()
     {
@@ -193,5 +220,14 @@ public class LinkedListStructure : MonoBehaviour
         empty.RemoveFirst();
         empty.RemoveEnd();
         empty.RemoveAtPos(0);
+        Debug.Log("_______________________________");
+        Debug.Log("Current List");
+        link.Display();
+        Debug.Log("_______________________________");
+        Debug.Log("Reverse List");
+        link.Reverse();
+        link.Display();
+        Debug.Log("_______________________________");
+        Debug.Log("Position is " + link.Search(8));
     }
 }
