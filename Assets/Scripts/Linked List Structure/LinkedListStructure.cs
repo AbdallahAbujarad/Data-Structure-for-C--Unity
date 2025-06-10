@@ -56,6 +56,23 @@ public class LinkedListStructure : MonoBehaviour
             length++;
 
         }
+        public void Display()
+        {
+            Node cur = front;
+            for (int i = 0; i < length; i++)
+            {
+                Debug.Log(cur.item);
+                cur = cur.next;
+            }
+        }
+        public T GetFront()
+        {
+            return front.item;
+        }
+        public T GetBack()
+        {
+            return back.item;
+        }
         bool InsertIfEmpty(Node newNode)
         {
             if (length == 0)
@@ -71,10 +88,11 @@ public class LinkedListStructure : MonoBehaviour
     }
     void Start()
     {
-
-    }
-    void Update()
-    {
-
+        LinkedL<int> link = new LinkedL<int>();
+        link.InsertFirst(5);
+        link.InsertFirst(7);
+        link.InsertEnd(6);
+        link.InsertAtPosition(1,1);
+        link.Display();
     }
 }
