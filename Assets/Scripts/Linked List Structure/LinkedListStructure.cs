@@ -37,7 +37,7 @@ public class LinkedListStructure : MonoBehaviour
             Node newNode = new Node(item);
             if (pos < 0 || pos > length)
             {
-                Debug.Log("Out Of Range");
+                Debug.LogWarning("Out Of Range");
                 return;
             }
             if (InsertIfEmpty(newNode)) return;
@@ -52,9 +52,8 @@ public class LinkedListStructure : MonoBehaviour
                 }
                 newNode.next = cur.next;
                 cur.next = newNode;
+                length++;
             }
-            length++;
-
         }
         public void Display()
         {
@@ -84,7 +83,85 @@ public class LinkedListStructure : MonoBehaviour
             }
             return false;
         }
-
+        bool IsEmpty()
+        {
+            return front == null;
+        }
+        public void RemoveFirst()
+        {
+            if (IsEmpty())
+            {
+                Debug.LogWarning("List is Empty....");
+                return;
+            }
+            if (length == 1)
+            {
+                front = null;
+                back = null;
+                length = 0;
+            }
+            else
+            {
+                front = front.next;
+                length--;
+            }
+        }
+        public void RemoveEnd()
+        {
+            if (IsEmpty())
+            {
+                Debug.LogWarning("List is Empty....");
+                return;
+            }
+            if (length == 1)
+            {
+                front = null;
+                back = null;
+                length = 0;
+            }
+            else
+            {
+                Node cur = front;
+                for (int i = 0; i < length - 2; i++)
+                {
+                    cur = cur.next;
+                }
+                back = cur;
+                back.next = null;
+                length--;
+            }
+        }
+        public void RemoveAtPos(int pos)
+        {
+            if (IsEmpty())
+            {
+                Debug.LogWarning("List is Empty....");
+                return;
+            }
+            if (pos < 0 || pos >= length)
+            {
+                Debug.LogWarning("Out Of Range");
+                return;
+            }
+            if (pos == 0)
+            {
+                RemoveFirst();
+                return;
+            }
+            if (pos == length - 1)
+            {
+                RemoveEnd();
+                return;
+            }
+            Node prev = front;
+            for (int i = 0; i < pos - 1; i++)
+            {
+                prev = prev.next;
+            }
+            Node toDelete = prev.next;
+            prev.next = toDelete.next;
+            length--;
+        }
     }
     void Start()
     {
@@ -92,7 +169,29 @@ public class LinkedListStructure : MonoBehaviour
         link.InsertFirst(5);
         link.InsertFirst(7);
         link.InsertEnd(6);
-        link.InsertAtPosition(1,1);
+        link.InsertAtPosition(1, 1);
         link.Display();
+        //7,1,5,6
+        Debug.Log("_______________________________");
+        for (int i = 0; i < 5; i++)
+        {
+            link.InsertFirst(Random.Range(0, 10));
+        }
+        Debug.Log("Current List");
+        link.Display();
+        Debug.Log("_______________________________");
+        link.RemoveEnd();
+        link.RemoveFirst();
+        link.RemoveAtPos(4);
+        link.RemoveAtPos(200);
+        link.RemoveAtPos(-1);
+        Debug.Log("List After Remove Processes");
+        link.Display();
+        Debug.Log("_______________________________");
+        Debug.Log("Empty List Remove Warnings");
+        LinkedL<int> empty = new LinkedL<int>();
+        empty.RemoveFirst();
+        empty.RemoveEnd();
+        empty.RemoveAtPos(0);
     }
 }
