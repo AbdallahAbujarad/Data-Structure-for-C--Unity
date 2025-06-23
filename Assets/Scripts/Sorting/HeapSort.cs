@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HeapSort : MonoBehaviour
 {
-    void Heapify(int[] arr, int i, int size)    // Heapify for max-heap (for ascending sort)
+    static void Heapify(int[] arr, int i, int size)    // Heapify for max-heap (for ascending sort)
     {
         int max = i;
         int left = i * 2 + 1;
@@ -29,7 +29,7 @@ public class HeapSort : MonoBehaviour
         }
     }
 
-    void AscendingSort(int[] arr)
+    public static void AscendingSort(int[] arr)
     {
         int n = arr.Length;
         for (int i = n / 2 - 1; i >= 0; i--)        // Build max heap
